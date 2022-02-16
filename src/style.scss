@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+body {
+  display: flex;
+  justify-content: center;
+  background-color: #f3f1f1;
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+  #container {
+    background-color: #d9d9d9;
+    min-height: 100vh;
+    max-width: 500px;
+    width: 100vw;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    #start {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      font-size: 2rem;
+      text-transform: uppercase;
+      background-color: #d9d9d9;
+      filter: drop-shadow(0px 0px 17.4px #626262);
+      width: 150px;
+      height: 150px;
+
+      border-radius: 50%;
+      transition: all ease 0.1s;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  #countdownContainer {
+    position: relative;
+    p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: all ease 0.5s;
+      text-transform: uppercase;
+    }
+    .start {
+      font-size: 6rem;
+      visibility: hidden;
+    }
+    .end {
+      font-size: 2rem;
+    }
+  }
+
+  #timerContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.12rem;
+    margin-bottom: 1rem;
+    .underTen {
+      color: red;
+    }
+  }
+
+  #questionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 80%;
+    height: 30%;
+    margin-bottom: 4rem;
+
+    p {
+      font-size: 1.12rem;
+      margin-bottom: 10px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  #choicesContainer {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 4rem;
+
+    div {
+      width: 100%;
+      height: 150px;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    input {
+      display: none;
+      &:checked ~ img {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  #submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0;
+
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 10px;
+    background: #d9d9d9;
+    filter: drop-shadow(0px 0px 17.4px #626262);
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  #userAnswer {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    div {
+      height: 100%;
+    }
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      display: none;
+      &.visible {
+        display: block;
+      }
+    }
+  }
+
+  #arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 0px;
+    transition: all ease 0.5s;
+    overflow: hidden;
+
+    p {
+      transform: rotate(90deg);
+      font-size: 3rem;
+    }
+  }
+
+  #score {
+    position: relative;
+
+    width: 80%;
+    height: 30%;
+
+    & > * {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+    
+    img {
+      object-fit: cover;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #overlay {
+      background-color: black;
+      opacity: 0.5;
+      transform-origin: top left;
+      top: 0;
+      right: 0;
+      transition: all ease .5s;
+    }
+
+    #textContainer {
+      overflow: hidden;
+      font-size: 1.5rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all ease .5s;
+      p {
+        color: white;
+        white-space: nowrap;
+      }
+    }
+  }
+}
