@@ -17,17 +17,26 @@ export const createChoices = (): HTMLDivElement => {
   const choicesContainer: HTMLDivElement = document.createElement('div');
   choicesContainer.setAttribute('id', 'choicesContainer');
 
-  const ingredients: string[] = [
+  const data: string[] = [
     "shrimp",
-    "chicken stock",
     "galangal",
     "lemongrass",
     "kaffir lime leave",
     "mushroom",
     "chilli pepper",
     "lime juice",
-    "fish sauce"
+    "fish sauce",
+    "onion",
+    "garlic",
+    "carrot"
   ];
+
+  let ingredients = [];
+  for (let i = 0; i < data.length; i++) {
+    const random = Math.floor(Math.random() * (data.length - i));
+    ingredients.push(data[random]);
+    data[random] = data[data.length - 1 - i];
+  }
 
   ingredients.forEach(ing => {
     const div: HTMLDivElement = document.createElement('div');
@@ -39,7 +48,7 @@ export const createChoices = (): HTMLDivElement => {
     div.appendChild(input);
 
     const img: HTMLImageElement = document.createElement('img');
-    img.src = `./img/Tom_Yum_Goong.webp`;
+    img.src = `./img/${ing.replace(/\ /g, '_')}.jpg`;
     img.setAttribute('alt', ing);
     div.appendChild(img);
 
@@ -65,21 +74,29 @@ export const checkUserAnswer = (choices: HTMLDivElement): string[] => {
   return res;
 };
 
-export const getScore = (ans: string[]) => {
+export const getScore = (ans: string[]): [number, number, number] => {
   const ingredients: string[] = [
     "shrimp",
-    "chicken stock",
     "galangal",
     "lemongrass",
     "kaffir lime leave",
     "mushroom",
     "chilli pepper",
     "lime juice",
-    "fish sauce"
+    "fish sauce",
   ];
-  let score = 0;
-  ingredients.forEach(v => ans.includes(v) ? score++ : 0);
-  return Math.floor((score / ingredients.length) * 10);
+  const fake: string[] = [
+    "onion",
+    "garlic",
+    "carrot"
+  ];
+  
+  let correct = 0;
+  ingredients.forEach(v => ans.includes(v) ? correct++ : 0);
+  let incorrect = 0;
+  fake.forEach(v => ans.includes(v) ? incorrect++ : 0);
+
+  return [correct, incorrect, correct - incorrect];
 };
 
 export const createTimer = (min: number, submit: HTMLDivElement): [HTMLDivElement, NodeJS.Timer] => {

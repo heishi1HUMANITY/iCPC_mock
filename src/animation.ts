@@ -30,19 +30,31 @@ export const showUserAnswer = (container: HTMLDivElement, userAnswer: string[]):
   return new Promise(resolve => {
     if (userAnswer.length === 0) resolve();
 
+    const fake: string[] = [
+      "onion",
+      "garlic",
+      "carrot"
+    ];
+
     const div: HTMLDivElement = document.createElement('div');
     div.setAttribute('id', 'userAnswer');
     container.appendChild(div);
 
     for (let i = 0; i < userAnswer.length; i++) {
       const underDiv: HTMLDivElement = document.createElement('div');
+      underDiv.id = 'imgContainer';
       div.appendChild(underDiv);
       const img: HTMLImageElement = document.createElement('img');
-      img.src = './img/Tom_Yum_Goong.webp';
+      img.src = `./img/${userAnswer[i].replace(/\ /g, '_')}.jpg`;
       img.alt = userAnswer[i];
       underDiv.appendChild(img);
+      if (fake.includes(userAnswer[i])) {
+        const overlay: HTMLDivElement = document.createElement('div');
+        overlay.id = 'incorrectUseranswerOverlay';
+        underDiv.appendChild(overlay);
+      }
       setTimeout(() => {
-        img.setAttribute('class', 'visible');
+        underDiv.setAttribute('class', 'visible');
         if (i === userAnswer.length - 1) { resolve(); }
       }, i * 500);
     }
@@ -64,7 +76,7 @@ export const showArrow = (container: HTMLDivElement): Promise<void> => {
   });
 }
 
-export const showScore = (container: HTMLDivElement, score: number): Promise<void> => {
+export const showScore = (container: HTMLDivElement, [correct, incorrect, score]: [number, number, number]): Promise<void> => {
   return new Promise(resolve => {
     const div: HTMLDivElement = document.createElement('div');
     div.setAttribute('id', 'score');
@@ -72,9 +84,12 @@ export const showScore = (container: HTMLDivElement, score: number): Promise<voi
     const img: HTMLImageElement = document.createElement('img');
     img.src = './img/Tom_Yum_Goong.webp';
     div.appendChild(img);
-    const overlay: HTMLDivElement = document.createElement('div');
-    overlay.id = 'overlay';
-    div.appendChild(overlay);
+    const correctOverlay: HTMLDivElement = document.createElement('div');
+    correctOverlay.id = 'correctOverlay';
+    div.appendChild(correctOverlay);
+    const incorrectOverlay: HTMLDivElement = document.createElement('div');
+    incorrectOverlay.id = 'incorrectOverlay';
+    div.appendChild(incorrectOverlay);
 
     const textContainer: HTMLDivElement = document.createElement('div');
     textContainer.id = 'textContainer';
@@ -84,12 +99,17 @@ export const showScore = (container: HTMLDivElement, score: number): Promise<voi
     p.textContent = `${score} POINTS!!!`;
     textContainer.appendChild(p);
 
+    console.log(correct);
+    console.log(incorrect)
 
     setTimeout(() => {
-      overlay.setAttribute('style', `width: ${100 - score * 10}%;`)
+      correctOverlay.setAttribute('style', `width: ${100 - Math.floor((correct / 8) * 100)}%;`)
       setTimeout(() => {
-        textContainer.setAttribute('style', 'width: 100%;');
-        setTimeout(() => resolve(), 500);
+        incorrectOverlay.setAttribute('style', `width: ${(incorrect / 8) * 100}%`);
+        setTimeout(() => {
+          textContainer.setAttribute('style', 'width: 100%;');
+          setTimeout(() => resolve(), 500);
+        }, 500);
       }, 500)
     }, 500)
   })

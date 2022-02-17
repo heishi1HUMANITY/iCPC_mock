@@ -21,7 +21,7 @@ startButton.addEventListener('click', async () => {
   submitButton.addEventListener('click', async () => {
     clearInterval(intervalTimer);
     const userAnswer = checkUserAnswer(choices);
-    const score = getScore(userAnswer);
+    const score: [number, number, number] = getScore(userAnswer);
     choices.remove();
     submitButton.remove();
     timer.remove();
